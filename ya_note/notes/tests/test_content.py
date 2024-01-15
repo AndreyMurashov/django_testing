@@ -32,7 +32,7 @@ class TestRoutes(TestCase):
             (self.reader_client, False),
         )
         for user, note_in_list in users_statuses:
-            with self.subTest():
+            with self.subTest(user=user):
                 url = reverse('notes:list')
                 response = user.get(url)
                 object_list = response.context['object_list']
@@ -45,7 +45,7 @@ class TestRoutes(TestCase):
             ('notes:edit', (self.notes.slug,)),
         )
         for name, args in urls:
-            with self.subTest():
+            with self.subTest(name=name):
                 url = reverse(name, args=args)
                 response = self.author_client.get(url)
                 self.assertIn('form', response.context)

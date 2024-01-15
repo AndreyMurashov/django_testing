@@ -1,50 +1,13 @@
 from http import HTTPStatus
 
 from django.urls import reverse
-from datetime import datetime
 
 import pytest
 
 from pytest_django.asserts import assertRedirects, assertFormError
 
-from news.models import Comment, News
+from news.models import Comment
 from news.forms import BAD_WORDS, WARNING
-
-
-@pytest.fixture
-def author(django_user_model):
-    return django_user_model.objects.create(username='Автор')
-
-
-@pytest.fixture
-def author_client(author, client):
-    client.force_login(author)
-    return client
-
-
-@pytest.fixture
-def news():
-    news = News.objects.create(
-        title='Заголовок',
-        text='Текст новости',
-        date=datetime.today(),
-    )
-    return news
-
-
-@pytest.fixture
-def comment(news, author):
-    comment = Comment.objects.create(
-        text='Текст комментария',
-        news=news,
-        author=author
-    )
-    return comment
-
-
-@pytest.fixture
-def new_comment():
-    return {'text': 'Новый текст'}
 
 
 # Анонимный пользователь не может отправить комментарий.
